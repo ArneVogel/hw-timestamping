@@ -12,7 +12,7 @@ Before the tool is run the time the time between the kernel and the NIC has to b
 `phc2sys` is avaliable from the linux PTP tools which is available at: git://git.code.sf.net/p/linuxptp/code
 
 `hw-timestamping` listens for UDP packets.
-[rust-packets](https://nohost.iijlab.net/gitlab/awesome-bft-group/rust-packets) can be used to create these packets.
+The Rust application in `./rust-packets` can be used to create these packets.
 
 The result of the experiment is a file with all the measured latency numbers called `latency.txt`.
 Use the python script `summarize.py` to create a plot of the numbers.
