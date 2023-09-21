@@ -8,7 +8,7 @@ results = {
 }
 
 
-nic_kernel, nic_user, kernel_user = get_latency_numbers("latancy.txt")
+nic_kernel, nic_user, kernel_user = get_latency_numbers("latency.txt")
 e2e = get_e2e_latency_numbers("end_to_end_latency.txt")
 
 nic_kernel = remove_first_x_percent(10, nic_kernel)
