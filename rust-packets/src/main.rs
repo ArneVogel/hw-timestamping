@@ -1,6 +1,6 @@
 extern crate libc;
 extern crate packet;
-use libc::{c_void, sendto, sockaddr, sockaddr_ll, socket, AF_PACKET, SOCK_RAW};
+use libc::{c_void, if_nametoindex, sendto, sockaddr, sockaddr_ll, socket, AF_PACKET, SOCK_RAW};
 use packet::Builder;
 use std::env;
 use std::fs::File;
@@ -25,6 +25,13 @@ fn open_fd() -> io::Result<i32> {
 }
 
 fn main() {
+    let args: Vec<String> = env::args().collect();
+    let interface = if args.len() >= 2 { &args[1] } else { "eth0" };
+    let if_idx = unsafe {
+        let c_str = std::ffi::CString::new(interface).unwrap();
+        if_nametoindex(c_str.as_ptr()) as i32
+    };
+
     /* When you send packets, it is enough to specify sll_family,
      * sll_addr, sll_halen, sll_ifindex, and sll_protocol. The other
      * fields should be 0. sll_hatype and sll_pkttype are set on
@@ -33,7 +40,7 @@ fn main() {
         // https://man7.org/linux/man-pages/man7/packet.7.html
         sll_family: AF_PACKET as u16, // /* Always AF_PACKET */
         sll_protocol: 0x0800,         // IP packet
-        sll_ifindex: 4,               // Interface number
+        sll_ifindex: if_idx,          // Interface number
         sll_hatype: 0,
         sll_pkttype: 0, // These types make sense only for receiving.
         sll_halen: 0,
