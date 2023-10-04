@@ -28,6 +28,14 @@ You can pass the name of the interface you want to use as the first argument:
 The result of the experiment is a file with all the measured latency numbers called `latency.txt`.
 Use the python script `summarize.py` to create a plot of the numbers.
 
+## Tests
+
+Successfully tested on the following platform:
+- Ubuntu 22.04
+- Linux kernel 5.15.0-69
+- Rust 1.72.1
+- Mellanox ConnectX-5 25Gb NIC
+
 ## Background
 
 [Slides](https://events.static.linuxfound.org/sites/events/files/slides/lcjp14_ichikawa_0.pdf) for PTP tools
